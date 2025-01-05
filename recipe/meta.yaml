@@ -6,18 +6,19 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/updater-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/updater-{{ version }}.tar.gz
   sha256: 8f540a3cf9fdfa9683509974853f73ed69acfaf82ac3f9740c62fac175a79111
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
+    - setuptools
   run:
     - behave ==1.2.6
     - cachier ==1.5.3
@@ -26,7 +27,7 @@ requirements:
     - packaging ==21.3
     - plumbum ==1.7.1
     - pymongo ==3.12.1
-    - python >=3.6
+    - python >={{ python_min }}
     - python-rex ==0.4
     - pyyaml ==5.4.1
     - requests ==2.26.0
@@ -38,6 +39,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/paterit/version-checker
